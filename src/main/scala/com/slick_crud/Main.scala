@@ -67,11 +67,17 @@ object Main {
     Thread.sleep(10000)
   }
 
+  //Delete
+  def demoDelete(): Unit ={
+    Connection.db.run(SlickTables.movieTable.filter(_.name.like("%Matrix%")).delete)
+    Thread.sleep(10000)
+  }
 
   def main(args: Array[String]): Unit = {
     //demoInsertMovie();
     //demoReadAllMovies();
     /*demoReadSomeMovies()*/
-    demoUpDate()
+    /*demoUpDate()*/
+    demoDelete()
   }
 }
