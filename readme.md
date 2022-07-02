@@ -17,3 +17,16 @@ i put all the database configuration in this file in order to connect to the dat
 ####connection instance
 i can create a connection instance using the PostgresProfile and 
 previously defined configuration
+
+####description of the project
+in this project i use scala to do the CRUD(Create Read Update Delete)
+operations by inserting movies,reading them,readind some,updating and deleting
+
+####advanced queries
+i used scala for queries dealing with mapping between movies and actor and also to insert both movie and actor both
+by using transactionnal
+
+####launch this project
+To launch this project clone the github repository in your local,then
+open it with and IDE after build the build.sbt and create your posgreSQL database
+by using the docker and application.conf' datas
