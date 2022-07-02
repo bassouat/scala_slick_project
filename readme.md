@@ -13,3 +13,7 @@ container
 
 ####application.conf
 i put all the database configuration in this file in order to connect to the database
+
+####connection instance
+i can create a connection instance using the PostgresProfile and 
+previously defined configuration
