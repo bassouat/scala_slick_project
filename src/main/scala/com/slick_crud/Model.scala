@@ -4,6 +4,9 @@ import java.time.LocalDate
 
 //it is a case class used in the mapping with the Slick table
 case class Movie(id: Long, name: String, releaseDate: LocalDate, lengthInMin: Int)
+case class Actor(id: Long, name: String)
+case class MovieActorMapping(id: Long, movieId: Long, actorId: Long)
+
 
 object SlickTables {
 
@@ -18,6 +21,27 @@ object SlickTables {
     // mapping function to the case class
     override def * = (id, name, releaseDate, lengthInMin) <> (Movie.tupled,Movie.unapply)
   }
+
+  class ActorTable(tag:Tag) extends Table[Actor](tag,Some("movies"),"Actor"){
+    def id = column[Long]("actor_id",O.PrimaryKey,O.AutoInc)
+    def name=column[String]("name")
+
+    //Mapping
+    override def * = (id,name) <> (Actor.tupled,Actor.unapply)
+  }
+
+  //actor -movie mapping
+  class MovieActorMappingTable(tag:Tag) extends Table[MovieActorMapping](tag,Some("movies"),"MovieActorMapping"){
+    def id = column[Long]("movie_actor_id",O.PrimaryKey,O.AutoInc)
+    def movieId=column[Long]("movie_id")
+    def actorId=column[Long]("actor_id")
+
+    //Mapping
+    override def * = (id,movieId,actorId) <> (MovieActorMapping.tupled,MovieActorMapping.unapply)
+  }
+
   //"API entry point"
   lazy val movieTable = TableQuery[MovieTable]
+  lazy val actorTable = TableQuery[ActorTable]
+  lazy val movieActorMappingTable = TableQuery[MovieActorMappingTable]
 }
