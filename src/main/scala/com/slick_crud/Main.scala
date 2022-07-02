@@ -42,9 +42,22 @@ object Main {
     }
     Thread.sleep(10000)
   }
+  //Read some movies
+  def demoReadSomeMovies():Unit= {
+    val resultReadSome = SlickTables.movieTable.filter(_.name.like("%Matrix%")).result;
+    val resulFuture:Future[Seq[Movie]]=Connection.db.run(resultReadSome) //"select * from ___where name like "Matrix""
+    resulFuture.onComplete{
+      case Success(movies) => println(s"Fetched: ${movies.mkString(",")}")
+      case Failure(ex) => println(s"Fetching failed:$ex")
+    }
+
+    Thread.sleep(10000)
+  }
+
+
   def main(args: Array[String]): Unit = {
     //demoInsertMovie();
-    demoReadAllMovies();
-
+    //demoReadAllMovies();
+    demoReadSomeMovies()
   }
 }
