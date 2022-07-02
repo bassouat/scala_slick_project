@@ -15,27 +15,37 @@ object Main {
   import slick.jdbc.PostgresProfile.api._
   import PrivateExecutionContext._
 
-  val thePhantomMenace: Movie = Movie(3L,"The Phantom Menace",LocalDate.of(2005,7,12),205)
-  val theNoteBook: Movie = Movie(1L,"The Note Book",LocalDate.of(2003,11,1),200)
-  val theMatrix: Movie = Movie(2L,"The Matrix",LocalDate.of(2000,9,12),205)
+  val thePhantomMenace: Movie = Movie(3L, "The Phantom Menace", LocalDate.of(2005, 7, 12), 205)
+  val theNoteBook: Movie = Movie(1L, "The Note Book", LocalDate.of(2003, 11, 1), 200)
+  val theMatrix: Movie = Movie(2L, "The Matrix", LocalDate.of(2000, 9, 12), 205)
+
   // Create
-  def demoInsertMovie(): Unit={
-    val queryDescription = SlickTables.movieTable ++= Seq(thePhantomMenace,theNoteBook,theMatrix)
+  def demoInsertMovie(): Unit = {
+    val queryDescription = SlickTables.movieTable ++= Seq(thePhantomMenace, theNoteBook, theMatrix)
     val futureId = Connection.db.run(queryDescription)
 
 
     futureId.onComplete {
-      case Success(_)=> println(s"Query was successfull")
+      case Success(_) => println(s"Query was successfull")
       case Failure(ex) => println(s"Query failed , reason :$ex")
     }
     Thread.sleep(10000)
   }
 
+  //Read all movies
+  def demoReadAllMovies(): Unit = {
+    val resultRead = SlickTables.movieTable.result
+    val resulFuture: Future[Seq[Movie]] = Connection.db.run(resultRead) //"select * from ___"
+    resulFuture.onComplete {
+      case Success(movies) => println(s"Fetched: ${movies.mkString(",")}")
+      case Failure(ex) => println(s"Fetching failed:$ex")
+    }
 
-  def main(args: Array[String]): Unit = {
-    demoInsertMovie();
+    def main(args: Array[String]): Unit = {
+      //demoInsertMovie();
+      demoReadAllMovies();
 
+    }
 
   }
-
 }
