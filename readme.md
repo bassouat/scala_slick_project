@@ -11,3 +11,5 @@ Let’s add all the necessary dependencies together in the build.sbt
 i use docker-compose.yml to spin up a service that encapsulates in a docker
 container
 
+####application.conf
+i put all the database configuration in this file in order to connect to the database
