@@ -40,12 +40,11 @@ object Main {
       case Success(movies) => println(s"Fetched: ${movies.mkString(",")}")
       case Failure(ex) => println(s"Fetching failed:$ex")
     }
-
-    def main(args: Array[String]): Unit = {
-      //demoInsertMovie();
-      demoReadAllMovies();
-
-    }
+    Thread.sleep(10000)
+  }
+  def main(args: Array[String]): Unit = {
+    //demoInsertMovie();
+    demoReadAllMovies();
 
   }
 }
